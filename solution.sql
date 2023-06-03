@@ -46,7 +46,6 @@ AS
   LEAD(hire_date) OVER(PARTITION BY department_id) AS next_date
   FROM employees
 )
-SELECT cte1.name,d.name,next_date-hire_date AS hire_date_diff
+SELECT cte1.name,d.name,COALESCE(next_date-hire_date,0) AS hire_date_diff
 FROM cte1 JOIN departments d
 ON d.id=cte1.department_id
-WHERE next_date IS NOT NULL
